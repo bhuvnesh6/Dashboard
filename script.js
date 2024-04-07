@@ -32,7 +32,7 @@ let revChart = new Chart(ctx, {
     responsive: true,
     tooltips: {
       intersect: false,
-      mode: "index"
+      node: "index"
     }
   }
 });
