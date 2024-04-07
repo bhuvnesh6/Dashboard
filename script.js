@@ -17,7 +17,7 @@ let revChart = new Chart(ctx, {
         label: "Sales",
         borderColor: "blue",
         backgroundColor: "rgba(235, 247, 245, 0.5)",
-        data: [1000, , 900, 1100, 2000, 5000]
+        data: [1000, 900, 1100, 2000, 5000]
       },
       {
         label: "Revenue",
