@@ -17,14 +17,13 @@ let revChart = new Chart(ctx, {
         label: "Sales",
         borderColor: "blue",
         backgroundColor: "rgba(235, 247, 245, 0.5)",
-        data: [1000, 900, 1100, 2000, 5000]
+        data: [1000, 900, 1100, 2000, 5000] // Removed extra comma
       },
       {
         label: "Revenue",
         borderColor: "red",
         backgroundColor: "rgba(233, 238, 253, 0.5)",
-        data: [2000000, 1800000, 2200000, 4000000, 10000000]
-
+        data: [2000000, 1800000, 2200000, 4000000, 10000000] // Adjusted data values
       }
     ]
   },
@@ -32,7 +31,7 @@ let revChart = new Chart(ctx, {
     responsive: true,
     tooltips: {
       intersect: false,
-      node: "index"
+      mode: "index" // Changed "node" to "mode"
     }
   }
 });
