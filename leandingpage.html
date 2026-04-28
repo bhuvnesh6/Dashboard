@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LeadPilot AI CRM | Built by Phishnix</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --white:#F5F6F7;
+  --silver:#C1C4C8;
+  --slate:#7B7F85;
+  --dark:#2B2E33;
+  --bg:#F5F6F7;
+  --accent:#2B2E33;
+  --green:#29fd63;
+  --green-dark:#1db84a;
+  --card-bg:#ffffff;
+  --text:#2B2E33;
+  --text-muted:#7B7F85;
+  --border:#C1C4C8;
+  --shadow:0 4px 40px rgba(43,46,51,0.10);
+  --nav-bg:#fff;
+  --nav-clr:#222327;
+  --nav-active:#29fd63;
+  font-family:'Poppins',sans-serif;
+}
+
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);overflow-x:hidden;padding-bottom:100px;}
+
+/* ===== SCROLL ANIMATIONS ===== */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.7s cubic-bezier(.4,0,.2,1),transform 0.7s cubic-bezier(.4,0,.2,1);}
+.reveal.left{transform:translateX(-40px);}
+.reveal.right{transform:translateX(40px);}
+.reveal.scale{transform:scale(0.92);}
+.reveal.visible{opacity:1;transform:none;}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;
+  background:linear-gradient(135deg,#F5F6F7 0%,#e8e9eb 50%,#d4d6d9 100%);
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:120px 20px 80px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-60px;right:-80px;
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(41,253,99,0.18) 0%,transparent 70%);
+  border-radius:50%;animation:pulse 4s ease-in-out infinite;
+}
+.hero::after{
+  content:'';position:absolute;bottom:-60px;left:-80px;
+  width:300px;height:300px;
+  background:radial-gradient(circle,rgba(43,46,51,0.08) 0%,transparent 70%);
+  border-radius:50%;animation:pulse 5s ease-in-out 1s infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
+
+.hero-badge{
+  display:inline-block;
+  background:var(--dark);color:var(--green);
+  font-size:0.72rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  padding:6px 18px;border-radius:50px;margin-bottom:22px;
+  animation:fadeDown 0.8s ease both;
+}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,7vw,5rem);
+  font-weight:900;line-height:1.1;
+  color:var(--dark);
+  animation:fadeUp 1s 0.2s ease both;
+}
+.hero h1 span{color:var(--slate);}
+.hero h1 .hl{
+  position:relative;display:inline-block;
+  color:var(--dark);
+}
+.hero h1 .hl::after{
+  content:'';position:absolute;bottom:-4px;left:0;width:100%;height:4px;
+  background:var(--green);border-radius:2px;
+  animation:lineGrow 1s 1.2s ease both;transform-origin:left;
+}
+@keyframes lineGrow{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
+
+.hero p{
+  font-size:clamp(1rem,2.5vw,1.2rem);color:var(--slate);max-width:600px;
+  margin:22px auto 36px;line-height:1.8;
+  animation:fadeUp 1s 0.4s ease both;
+}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp 1s 0.6s ease both;}
+
+.btn-primary{
+  background:var(--dark);color:var(--green);
+  padding:15px 32px;border-radius:50px;font-weight:700;font-size:1rem;
+  border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:10px;
+  transition:transform 0.25s,box-shadow 0.25s,background 0.25s;
+  box-shadow:0 4px 24px rgba(43,46,51,0.2);
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 36px rgba(43,46,51,0.28);background:#1a1c1f;}
+
+.btn-whatsapp{
+  background:var(--green);color:var(--dark);
+  padding:15px 32px;border-radius:50px;font-weight:700;font-size:1rem;
+  border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:10px;
+  transition:transform 0.25s,box-shadow 0.25s;
+  box-shadow:0 4px 24px rgba(41,253,99,0.3);
+}
+.btn-whatsapp:hover{transform:translateY(-3px);box-shadow:0 10px 36px rgba(41,253,99,0.4);}
+
+.btn-outline{
+  background:transparent;color:var(--dark);
+  padding:14px 30px;border-radius:50px;font-weight:600;font-size:1rem;
+  border:2px solid var(--dark);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:10px;
+  transition:all 0.25s;
+}
+.btn-outline:hover{background:var(--dark);color:var(--green);}
+
+.hero-stats{
+  display:flex;gap:40px;justify-content:center;flex-wrap:wrap;
+  margin-top:56px;animation:fadeUp 1s 0.8s ease both;
+}
+.stat{text-align:center;}
+.stat-num{font-size:2.2rem;font-weight:800;color:var(--dark);}
+.stat-label{font-size:0.78rem;color:var(--slate);text-transform:uppercase;letter-spacing:1px;}
+
+/* ===== SECTIONS ===== */
+section{padding:80px 20px;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-tag{display:inline-block;background:var(--dark);color:var(--green);font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 16px;border-radius:50px;margin-bottom:16px;}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);font-weight:900;color:var(--dark);margin-bottom:14px;line-height:1.2;}
+.section-sub{font-size:1.05rem;color:var(--slate);max-width:560px;line-height:1.7;}
+.section-header{margin-bottom:56px;}
+
+/* ===== FEATURES GRID ===== */
+.features-section{background:#fff;}
+.features-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;
+}
+.feature-card{
+  background:var(--white);border:1.5px solid var(--border);border-radius:20px;
+  padding:32px 28px;transition:all 0.35s;cursor:default;position:relative;overflow:hidden;
+}
+.feature-card::before{
+  content:'';position:absolute;top:0;left:0;width:100%;height:3px;
+  background:linear-gradient(90deg,var(--dark),var(--green));
+  transform:scaleX(0);transform-origin:left;transition:transform 0.4s;
+}
+.feature-card:hover::before{transform:scaleX(1);}
+.feature-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(43,46,51,0.12);border-color:var(--dark);}
+.feature-icon{
+  width:56px;height:56px;background:var(--dark);border-radius:14px;
+  display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+  font-size:1.4rem;color:var(--green);transition:transform 0.3s;
+}
+.feature-card:hover .feature-icon{transform:scale(1.1) rotate(-5deg);}
+.feature-card h3{font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:8px;}
+.feature-card p{font-size:0.9rem;color:var(--slate);line-height:1.6;}
+
+/* ===== HOW IT WORKS ===== */
+.how-section{background:var(--bg);}
+.steps{display:flex;flex-direction:column;gap:0;}
+.step{
+  display:flex;gap:28px;align-items:flex-start;position:relative;padding-bottom:40px;
+}
+.step:last-child{padding-bottom:0;}
+.step:not(:last-child)::after{
+  content:'';position:absolute;left:27px;top:56px;bottom:0;width:2px;
+  background:linear-gradient(180deg,var(--dark) 0%,var(--border) 100%);
+}
+.step-num{
+  flex-shrink:0;width:56px;height:56px;
+  background:var(--dark);color:var(--green);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:1.2rem;
+}
+.step-content h3{font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:6px;padding-top:14px;}
+.step-content p{font-size:0.92rem;color:var(--slate);line-height:1.6;}
+
+/* ===== PLANS ===== */
+.plans-section{background:#fff;}
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;align-items:stretch;}
+.plan-card{
+  background:var(--white);border:1.5px solid var(--border);border-radius:24px;
+  padding:36px 30px;transition:all 0.35s;display:flex;flex-direction:column;
+}
+.plan-card.featured{
+  background:var(--dark);color:#fff;border-color:var(--dark);
+  transform:scale(1.03);box-shadow:0 24px 60px rgba(43,46,51,0.22);
+}
+.plan-card:hover:not(.featured){transform:translateY(-6px);box-shadow:0 20px 50px rgba(43,46,51,0.10);}
+.plan-badge{
+  display:inline-block;background:var(--green);color:var(--dark);
+  font-size:0.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  padding:4px 14px;border-radius:50px;margin-bottom:18px;
+}
+.plan-name{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;margin-bottom:8px;}
+.plan-card.featured .plan-name{color:#fff;}
+.plan-price{font-size:2.6rem;font-weight:800;color:var(--dark);margin-bottom:4px;}
+.plan-card.featured .plan-price{color:var(--green);}
+.plan-period{font-size:0.85rem;color:var(--slate);margin-bottom:22px;}
+.plan-card.featured .plan-period{color:#C1C4C8;}
+.plan-features{list-style:none;flex:1;margin-bottom:28px;}
+.plan-features li{
+  padding:9px 0;font-size:0.92rem;color:var(--slate);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.plan-card.featured .plan-features li{color:#C1C4C8;border-color:rgba(255,255,255,0.1);}
+.plan-features li .check{color:var(--green);font-size:0.85rem;}
+.plan-cta{
+  width:100%;padding:14px;border-radius:50px;font-weight:700;font-size:1rem;
+  border:none;cursor:pointer;transition:all 0.25s;
+  background:var(--dark);color:var(--green);
+}
+.plan-card.featured .plan-cta{background:var(--green);color:var(--dark);}
+.plan-cta:hover{opacity:0.85;transform:translateY(-2px);}
+
+/* ===== ANALYTICS SHOWCASE ===== */
+.analytics-section{background:var(--bg);}
+.analytics-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+@media(max-width:768px){.analytics-inner{grid-template-columns:1fr;}}
+.analytics-mockup{
+  background:var(--dark);border-radius:24px;padding:28px;
+  box-shadow:0 30px 80px rgba(43,46,51,0.25);
+}
+.mock-header{display:flex;gap:8px;margin-bottom:20px;}
+.mock-dot{width:12px;height:12px;border-radius:50%;background:var(--border);}
+.mock-dot:nth-child(1){background:#ff5f57;}
+.mock-dot:nth-child(2){background:#ffbd2e;}
+.mock-dot:nth-child(3){background:var(--green);}
+.mock-stat-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.mock-stat{background:rgba(255,255,255,0.07);border-radius:12px;padding:14px;}
+.mock-stat-val{font-size:1.4rem;font-weight:800;color:var(--green);}
+.mock-stat-label{font-size:0.72rem;color:#7B7F85;}
+.mock-bar-section{margin-top:8px;}
+.mock-bar-label{font-size:0.72rem;color:#7B7F85;margin-bottom:6px;}
+.mock-bar-track{background:rgba(255,255,255,0.07);border-radius:50px;height:8px;margin-bottom:8px;overflow:hidden;}
+.mock-bar-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--dark) 0%,var(--green) 100%);}
+.analytics-points{list-style:none;}
+.analytics-points li{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:16px 0;border-bottom:1px solid var(--border);
+}
+.analytics-points li:last-child{border:none;}
+.ap-icon{
+  width:40px;height:40px;background:var(--dark);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;color:var(--green);
+  flex-shrink:0;font-size:1rem;
+}
+.ap-title{font-size:0.95rem;font-weight:600;color:var(--dark);margin-bottom:3px;}
+.ap-desc{font-size:0.84rem;color:var(--slate);}
+
+/* ===== CUSTOM CRM ===== */
+.custom-section{
+  background:var(--dark);color:#fff;
+  border-radius:32px;margin:0 16px;
+}
+.custom-inner{max-width:900px;margin:0 auto;text-align:center;padding:80px 24px;}
+.custom-inner .section-title{color:#fff;}
+.custom-inner .section-sub{color:#C1C4C8;margin:0 auto 36px;}
+.custom-tags{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:28px 0;}
+.custom-tag{
+  background:rgba(255,255,255,0.08);color:#C1C4C8;
+  padding:7px 18px;border-radius:50px;font-size:0.82rem;font-weight:500;
+  border:1px solid rgba(255,255,255,0.12);transition:all 0.25s;cursor:default;
+}
+.custom-tag:hover{background:var(--green);color:var(--dark);border-color:var(--green);}
+
+/* ===== CONTACT/CTA ===== */
+.cta-section{background:#fff;padding:80px 20px;}
+.cta-inner{max-width:700px;margin:0 auto;text-align:center;}
+.contact-form{
+  background:var(--white);border:1.5px solid var(--border);border-radius:24px;
+  padding:40px 32px;margin-top:40px;text-align:left;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:600px){.form-row{grid-template-columns:1fr;}}
+.form-group{margin-bottom:18px;}
+.form-group label{display:block;font-size:0.82rem;font-weight:600;color:var(--dark);margin-bottom:7px;text-transform:uppercase;letter-spacing:0.5px;}
+.form-group input,
+.form-group select,
+.form-group textarea{
+  width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:12px;
+  font-family:'Poppins',sans-serif;font-size:0.95rem;color:var(--dark);background:#fff;
+  transition:border-color 0.25s,box-shadow 0.25s;outline:none;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{border-color:var(--dark);box-shadow:0 0 0 3px rgba(43,46,51,0.08);}
+.form-group textarea{resize:vertical;min-height:110px;}
+.form-submit{
+  width:100%;padding:16px;border-radius:50px;
+  background:var(--dark);color:var(--green);
+  font-family:'Poppins',sans-serif;font-size:1.05rem;font-weight:700;
+  border:none;cursor:pointer;transition:all 0.25s;margin-top:6px;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.form-submit:hover{background:#1a1c1f;transform:translateY(-2px);box-shadow:0 10px 36px rgba(43,46,51,0.2);}
+
+.wa-btn{
+  display:inline-flex;align-items:center;gap:12px;
+  background:var(--green);color:var(--dark);
+  padding:16px 36px;border-radius:50px;font-weight:700;font-size:1.05rem;
+  text-decoration:none;margin-top:18px;
+  transition:all 0.25s;box-shadow:0 6px 28px rgba(41,253,99,0.28);
+}
+.wa-btn:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(41,253,99,0.4);}
+
+/* ===== FOOTER ===== */
+.footer{
+  background:var(--dark);color:#C1C4C8;
+  text-align:center;padding:32px 20px;
+  font-size:0.85rem;
+}
+.footer strong{color:var(--green);}
+
+/* ===== NAV (as provided) ===== */
+.navigation{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  width:90%;max-width:400px;height:70px;
+  background:var(--dark);
+  display:flex;justify-content:center;align-items:center;
+  border-radius:15px;z-index:1000;
+  box-shadow:0 8px 40px rgba(43,46,51,0.18);
+}
+.navigation ul{display:flex;width:100%;position:relative;}
+.navigation ul li{
+  position:relative;list-style:none;width:20%;height:70px;z-index:1;
+}
+.navigation ul li a{
+  position:relative;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;width:100%;
+  text-align:center;text-decoration:none;
+}
+.navigation ul li a .icon{
+  position:relative;display:block;line-height:75px;font-size:1.5em;
+  text-align:center;transition:0.5s;color:var(--nav-bg);
+}
+.navigation ul li.active a .icon{transform:translateY(-35px);}
+.navigation ul li a .text{
+  position:absolute;color:var(--nav-clr);font-size:0.75em;font-weight:400;
+  letter-spacing:0.05em;transition:0.5s;opacity:0;transform:translateY(20px);
+  font-family:'Poppins',sans-serif;
+}
+.navigation ul li.active a .text{opacity:1;transform:translateY(10px);
+color: var(--nav-bg)}
+.indicator{
+  position:absolute;top:-50%;width:70px;height:70px;
+  background:var(--nav-active);border-radius:50%;
+  border:6px solid var(--bg);transition:0.5s;
+}
+.navigation ul li:nth-child(1).active ~ .indicator{left:calc(20% * 0 + (10% - 35px));}
+.navigation ul li:nth-child(2).active ~ .indicator{left:calc(20% * 1 + (10% - 35px));}
+.navigation ul li:nth-child(3).active ~ .indicator{left:calc(20% * 2 + (10% - 35px));}
+.navigation ul li:nth-child(4).active ~ .indicator{left:calc(20% * 3 + (10% - 35px));}
+.navigation ul li:nth-child(5).active ~ .indicator{left:calc(20% * 4 + (10% - 35px));}
+
+/* ===== SCROLL TO TOP ===== */
+#scrollTop{
+  position:fixed;right:20px;bottom:110px;
+  width:44px;height:44px;background:var(--dark);color:var(--green);
+  border-radius:50%;border:none;cursor:pointer;font-size:1.1rem;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:all 0.3s;z-index:999;
+  box-shadow:0 4px 20px rgba(43,46,51,0.2);
+}
+#scrollTop.show{opacity:1;pointer-events:all;}
+#scrollTop:hover{transform:translateY(-3px);}
+
+/* ===== MISC ===== */
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--dark);color:var(--green);font-size:0.78rem;font-weight:600;
+  padding:5px 14px;border-radius:50px;
+}
+.divider{width:60px;height:4px;background:var(--dark);border-radius:2px;margin:14px 0 28px;}
+.text-center{text-align:center;}
+.mb-4{margin-bottom:4px;}
+.mt-2{margin-top:8px;}
+
+/* ===== TESTIMONIALS ===== */
+.testi-section{background:var(--bg);}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px;}
+.testi-card{
+  background:#fff;border:1.5px solid var(--border);border-radius:20px;
+  padding:28px 24px;transition:all 0.3s;
+}
+.testi-card:hover{transform:translateY(-5px);box-shadow:var(--shadow);}
+.testi-stars{color:#FFB800;font-size:0.9rem;margin-bottom:12px;}
+.testi-text{font-size:0.92rem;color:var(--slate);line-height:1.7;margin-bottom:18px;font-style:italic;}
+.testi-author{font-weight:700;font-size:0.9rem;color:var(--dark);}
+.testi-role{font-size:0.78rem;color:var(--slate);}
+
+/* ===== TRIAL BANNER ===== */
+.trial-banner{
+  background:linear-gradient(135deg,var(--dark) 0%,#3a3e45 100%);
+  color:#fff;text-align:center;padding:56px 24px;
+  border-radius:32px;margin:0 16px 60px;
+}
+.trial-banner h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,3rem);font-weight:900;color:#fff;margin-bottom:12px;}
+.trial-banner p{color:#C1C4C8;font-size:1rem;margin-bottom:28px;}
+.trial-tag{
+  display:inline-block;background:var(--green);color:var(--dark);
+  font-weight:800;font-size:1.1rem;padding:8px 24px;border-radius:50px;margin-bottom:20px;
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div>
+    <div class="hero-badge">🤖 AI-Powered Real Estate CRM</div>
+    <h1>
+      Turn Real Estate Leads Into <br/>Qualified Site Visits<span class="hl">Automatically</span>
+    </h1>
+    <p>AI CRM that qualifies leads, follows up instantly, and books showings — so your team focuses only on ready-to-buy clients.</p>
+    <div class="hero-btns">
+      <a href="#plans" class="btn-primary"><i class="fas fa-rocket"></i> Start Free Trial</a>
+      <a href="https://wa.me/918920419130" target="_blank" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Chat with Us</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">3x</div><div class="stat-label">More Conversions</div></div>
+      <div class="stat"><div class="stat-num">80%</div><div class="stat-label">Less Manual Work</div></div>
+      <div class="stat"><div class="stat-num">7-Day</div><div class="stat-label">Free Trial</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+<div class="section-inner">
+  <div class="section-header reveal">
+    <span class="section-tag">Core Features</span>
+    <h2 class="section-title">AI Does the Heavy Lifting</h2>
+    <p class="section-sub">From the moment a lead hits your pipeline to the day they sign — LeadPilot handles every touchpoint, automatically.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card reveal" style="transition-delay:0.05s">
+      <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+      <h3>Auto Lead Qualification</h3>
+      <p>AI scores every inbound lead instantly — evaluating intent, budget signals, and behavior so your agents only chase real buyers.</p>
+    </div>
+    <div class="feature-card reveal" style="transition-delay:0.1s">
+      <div class="feature-icon"><i class="fas fa-paper-plane"></i></div>
+      <h3>Auto Follow-Up Sequences</h3>
+      <p>Drip campaigns via email, SMS, and WhatsApp — triggered automatically based on lead behavior. Zero manual effort.</p>
+    </div>
+    <div class="feature-card reveal" style="transition-delay:0.15s">
+      <div class="feature-icon"><i class="fas fa-phone-volume"></i></div>
+      <h3>AI Voice Caller</h3>
+      <p>Our AI calls your leads, qualifies them in natural conversation, and books appointments — even while your team is off the clock.</p>
+    </div>
+    <div class="feature-card reveal" style="transition-delay:0.2s">
+      <div class="feature-icon"><i class="fas fa-bell"></i></div>
+      <h3>Smart Team Alerts</h3>
+      <p>The right agent gets notified at the right moment. No lead falls through, no opportunity gets missed.</p>
+    </div>
+    <div class="feature-card reveal" style="transition-delay:0.25s">
+      <div class="feature-icon"><i class="fas fa-calendar-check"></i></div>
+      <h3>Auto Showing Scheduler</h3>
+      <p>AI books property showings based on lead preferences and agent availability. Fully hands-free scheduling.</p>
+    </div>
+    <div class="feature-card reveal" style="transition-delay:0.3s">
+      <div class="feature-icon"><i class="fas fa-pen-fancy"></i></div>
+      <h3>AI Message Drafting</h3>
+      <p>Personalized emails, texts, and WhatsApp messages written by AI — reviewed by you, sent in seconds.</p>
+    </div>
+    <div class="feature-card reveal" style="transition-delay:0.35s">
+      <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
+      <h3>Business Analytics</h3>
+      <p>Deep-dive into lead sources, conversion funnels, agent performance, and revenue pipeline — all in one dashboard.</p>
+    </div>
+    <div class="feature-card reveal" style="transition-delay:0.4s">
+      <div class="feature-icon"><i class="fas fa-star"></i></div>
+      <h3>AI Lead Scoring</h3>
+      <p>Every lead gets a live score. Your team focuses where the commission is — AI handles the ranking.</p>
+    </div>
+    <div class="feature-card reveal" style="transition-delay:0.45s">
+      <div class="feature-icon"><i class="fas fa-users-cog"></i></div>
+      <h3>Team Control Panel</h3>
+      <p>Assign leads, set targets, monitor activity, and manage your entire sales team from a single command center.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+<div class="section-inner">
+  <div class="section-header reveal text-center" style="text-align:center;">
+    <span class="section-tag">How It Works</span>
+    <h2 class="section-title">From Lead to Deal in 4 Steps</h2>
+  </div>
+  <div style="max-width:560px;margin:0 auto;">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <h3>Lead Comes In</h3>
+        <p>A prospect fills out a form, clicks an ad, or calls in. LeadPilot captures them instantly from any source — Zillow, your website, Facebook, Google, you name it.</p>
+      </div>
+    </div>
+    <div class="step reveal" style="transition-delay:0.1s">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <h3>AI Qualifies & Scores in Real Time</h3>
+        <p>The system analyzes intent, budget signals, and engagement patterns. Every lead gets a score — hot, warm, or cold — before your agent even sees it.</p>
+      </div>
+    </div>
+    <div class="step reveal" style="transition-delay:0.2s">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <h3>Automated Outreach Kicks In</h3>
+        <p>AI calls the lead, sends personalized texts and emails, and nurtures them on autopilot. Your team only steps in when the lead is ready.</p>
+      </div>
+    </div>
+    <div class="step reveal" style="transition-delay:0.3s">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <h3>Showing Booked → Deal Closed</h3>
+        <p>AI schedules the property showing. Your agent walks in prepared. You close. Simple, repeatable, scalable.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ANALYTICS SHOWCASE -->
+<section class="analytics-section" id="analytics">
+<div class="section-inner">
+  <div class="analytics-inner">
+    <div class="reveal left">
+      <div class="analytics-mockup">
+        <div class="mock-header">
+          <div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+        </div>
+        <div class="mock-stat-row">
+          <div class="mock-stat"><div class="mock-stat-val">312</div><div class="mock-stat-label">Total Leads</div></div>
+          <div class="mock-stat"><div class="mock-stat-val">89%</div><div class="mock-stat-label">Response Rate</div></div>
+          <div class="mock-stat"><div class="mock-stat-val">47</div><div class="mock-stat-label">Showings Booked</div></div>
+          <div class="mock-stat"><div class="mock-stat-val">$2.8M</div><div class="mock-stat-label">Pipeline Value</div></div>
+        </div>
+        <div class="mock-bar-section">
+          <div class="mock-bar-label">Hot Leads</div>
+          <div class="mock-bar-track"><div class="mock-bar-fill" style="width:78%"></div></div>
+          <div class="mock-bar-label">Warm Leads</div>
+          <div class="mock-bar-track"><div class="mock-bar-fill" style="width:55%"></div></div>
+          <div class="mock-bar-label">Cold Leads</div>
+          <div class="mock-bar-track"><div class="mock-bar-fill" style="width:30%"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal right">
+      <span class="section-tag">Analytics & Control</span>
+      <h2 class="section-title">Complete Business Visibility</h2>
+      <ul class="analytics-points">
+        <li>
+          <div class="ap-icon"><i class="fas fa-chart-line"></i></div>
+          <div><div class="ap-title">Real-Time Pipeline Tracking</div><div class="ap-desc">See every deal's stage, value, and close probability at a glance — no more guessing.</div></div>
+        </li>
+        <li>
+          <div class="ap-icon"><i class="fas fa-user-shield"></i></div>
+          <div><div class="ap-title">Agent Performance Dashboard</div><div class="ap-desc">Track calls made, showings booked, and conversion rates per agent — in real time.</div></div>
+        </li>
+        <li>
+          <div class="ap-icon"><i class="fas fa-funnel-dollar"></i></div>
+          <div><div class="ap-title">Lead Source ROI</div><div class="ap-desc">Know exactly which channel — Zillow, Google, Facebook — is driving your best closings.</div></div>
+        </li>
+        <li>
+          <div class="ap-icon"><i class="fas fa-cog"></i></div>
+          <div><div class="ap-title">Business Control Panel</div><div class="ap-desc">Set targets, automate workflows, and manage your entire operation from one place.</div></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- PLANS -->
+<section class="plans-section" id="plans">
+<div class="section-inner">
+  <div class="section-header reveal text-center" style="text-align:center;">
+    <span class="section-tag">Pricing Plans</span>
+    <h2 class="section-title">Pick Your Plan. Start Closing.</h2>
+    <p class="section-sub" style="margin:0 auto;">All plans include onboarding support. The Starter plan includes a full 7-day free trial — no credit card needed.</p>
+  </div>
+  <div class="plans-grid">
+    <!-- Starter -->
+    <div class="plan-card reveal" style="transition-delay:0.05s">
+      <div class="plan-badge">⭐ 7-Day Free Trial</div>
+      <div class="plan-name">Starter</div>
+      <div class="plan-price">$59<span style="font-size:1rem;font-weight:400;">/mo</span></div>
+      <div class="plan-period">Perfect for solo agents & small teams</div>
+      <ul class="plan-features">
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> Auto Lead Qualification</li>
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> Email & SMS Follow-Up</li>
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> AI Lead Scoring</li>
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> Team Alerts (up to 3 agents)</li>
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> Basic Analytics Dashboard</li>
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> Auto Showing Scheduler</li>
+      </ul>
+      <a href="#contact" class="plan-cta">Start Free Trial</a>
+    </div>
+    <!-- Growth (Featured) -->
+    <div class="plan-card featured reveal" style="transition-delay:0.1s">
+      <div class="plan-badge">🔥 Most Popular</div>
+      <div class="plan-name">Growth</div>
+      <div class="plan-price">$129<span style="font-size:1rem;font-weight:400;">/mo</span></div>
+      <div class="plan-period">Built for growing brokerages & teams</div>
+      <ul class="plan-features">
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> Everything in Starter</li>
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> AI Voice Caller</li>
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> AI Message Drafting</li>
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> Unlimited Agents</li>
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> Advanced Analytics & ROI Reports</li>
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> Team Control Panel</li>
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> Business Control Panel</li>
+      </ul>
+      <a href="#contact" class="plan-cta">Get Started</a>
+    </div>
+    <!-- Enterprise -->
+    <div class="plan-card reveal" style="transition-delay:0.15s">
+      <div class="plan-badge">🚀 Enterprise</div>
+      <div class="plan-name">Scale</div>
+      <div class="plan-price">Custom</div>
+      <div class="plan-period">For large brokerages & franchise groups</div>
+      <ul class="plan-features">
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> Everything in Growth</li>
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> Custom Integrations (MLS, CRMs)</li>
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> White-label Option</li>
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> Dedicated Account Manager</li>
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> Priority Support 24/7</li>
+        <li><span class="check"><i class="fas fa-check-circle"></i></span> Custom AI Workflows</li>
+      </ul>
+      <a href="#contact" class="plan-cta">Talk to Us</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- TRIAL BANNER -->
+<div class="trial-banner reveal scale">
+  <div class="trial-tag">🎁 7 Days FREE</div>
+  <h2>Try LeadPilot Risk-Free</h2>
+  <p>No credit card. No contracts. Full access to all Starter features for 7 days — see real results before you pay a dime.</p>
+  <a href="#contact" class="btn-primary" style="display:inline-flex;">
+    <i class="fas fa-rocket"></i> Claim Your Free Trial
+  </a>
+</div>
+
+<!-- CUSTOM CRM -->
+<section class="custom-section reveal scale" id="custom">
+<div class="custom-inner">
+  <span class="section-tag" style="background:rgba(41,253,99,0.15);color:var(--green);">Custom Development</span>
+  <h2 class="section-title">Need a Fully Custom CRM?</h2>
+  <p class="section-sub">We design and build CRMs from the ground up — tailored to your exact business process, team structure, and tech stack. Every build is unique. No free trial here (custom takes craft!), but the ROI is undeniable.</p>
+  <div class="custom-tags">
+    <span class="custom-tag">Custom Workflows</span>
+    <span class="custom-tag">MLS Integration</span>
+    <span class="custom-tag">White Labeling</span>
+    <span class="custom-tag">Web & Mobile Apps</span>
+    <span class="custom-tag">Role-Based Access</span>
+    <span class="custom-tag">Custom Reporting</span>
+    <span class="custom-tag">CRM Migration</span>
+    <span class="custom-tag">API Integrations</span>
+    <span class="custom-tag">AI Modules</span>
+  </div>
+  <a href="https://wa.me/918920419130?text=Hi%2C%20I%27m%20interested%20in%20Custom%20CRM%20Development" target="_blank" class="btn-whatsapp" style="margin-top:10px;">
+    <i class="fab fa-whatsapp"></i> Discuss Your Project
+  </a>
+</div>
+</section>
+
+<!-- CASE STUDY -->
+<section class="testi-section" id="work">
+<div class="section-inner">
+  <div class="section-header reveal text-center" style="text-align:center;">
+    <span class="section-tag">Proof of Work</span>
+    <h2 class="section-title">Built for a Real Client. Delivered Real Results.</h2>
+    <p class="section-sub" style="margin:0 auto 20px;">LeadPilot isn't theoretical — we deployed it at scale for NishaHomes, a growing real estate company. Here's what happened.</p>
+  </div>
+
+  <!-- Case Study Card -->
+  <div class="reveal" style="max-width:860px;margin:0 auto 52px;">
+    <div style="background:#fff;border:1.5px solid var(--border);border-radius:24px;overflow:hidden;box-shadow:var(--shadow);">
+      <!-- Case Study Header -->
+      <div style="background:var(--dark);padding:28px 36px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+        <div style="width:56px;height:56px;background:var(--green);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:900;color:var(--dark);flex-shrink:0;">N</div>
+        <div>
+          <div style="color:var(--green);font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Case Study · Real Client · Real Results · No Demo</div>
+          <div style="color:#fff;font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;">NishaHomes</div>
+          <a href="https://nishahomes.com" target="_blank" style="color:var(--silver);font-size:0.8rem;text-decoration:none;">nishahomes.com ↗</a>
+        </div>
+        <div style="margin-left:auto;text-align:right;">
+          <div style="color:var(--green);font-size:0.72rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;">Engagement Type</div>
+          <div style="color:#fff;font-size:0.9rem;font-weight:600;">Custom LeadPilot AI CRM Deployment</div>
+        </div>
+      </div>
+      <!-- Case Study Body -->
+      <div style="padding:36px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px;">
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">The Challenge</div>
+          <p style="font-size:0.9rem;color:var(--slate);line-height:1.7;">NishaHomes was losing leads to delayed follow-ups. Agents were manually chasing cold prospects while hot buyers went unattended. Their pipeline had no structure.</p>
+        </div>
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">What We Built</div>
+          <p style="font-size:0.9rem;color:var(--slate);line-height:1.7;">We deployed a fully custom LeadPilot CRM — AI scoring, automated follow-up sequences, an AI voice caller, showing scheduler, and a live team dashboard.</p>
+        </div>
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">The Results</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="background:var(--dark);color:var(--green);padding:4px 12px;border-radius:50px;font-size:0.8rem;font-weight:700;">3x</span>
+              <span style="font-size:0.88rem;color:var(--dark);font-weight:600;">Lead-to-showing conversion</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="background:var(--dark);color:var(--green);padding:4px 12px;border-radius:50px;font-size:0.8rem;font-weight:700;">80%</span>
+              <span style="font-size:0.88rem;color:var(--dark);font-weight:600;">Reduction in manual follow-ups</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="background:var(--dark);color:var(--green);padding:4px 12px;border-radius:50px;font-size:0.8rem;font-weight:700;">24/7</span>
+              <span style="font-size:0.88rem;color:var(--dark);font-weight:600;">AI caller working around the clock</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonials -->
+  <div class="testi-grid">
+    <!-- NishaHomes review (featured) -->
+    <div class="testi-card reveal" style="border-color:var(--dark);position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--dark),var(--green));"></div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <div style="width:40px;height:40px;background:var(--dark);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--green);font-weight:800;font-size:1rem;flex-shrink:0;">N</div>
+        <div>
+          <div style="font-size:0.65rem;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:1px;">Verified Client</div>
+          <a href="https://nishahomes.com" target="_blank" style="font-size:0.78rem;color:var(--dark);text-decoration:none;font-weight:600;">nishahomes.com ↗</a>
+        </div>
+      </div>
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"The LeadPilot CRM completely transformed how we handle leads. The AI caller runs 24/7, the scoring is spot-on, and our agents now only talk to people who are actually ready to buy. Best investment we made for our sales team."</p>
+      <div class="testi-author">Subhash</div>
+      <div class="testi-role">Founder & Director, NishaHomes</div>
+    </div>
+    <div class="testi-card reveal" style="transition-delay:0.1s">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"We were drowning in leads with no system. LeadPilot gave us structure, automation, and visibility. Our close rate jumped in the first month."</p>
+      <div class="testi-author">James Whitfield</div>
+      <div class="testi-role">Broker-Owner, Cornerstone Realty Group</div>
+    </div>
+    <div class="testi-card reveal" style="transition-delay:0.2s">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"The automated follow-up sequences alone paid for themselves. Leads that used to go cold are now converting — sometimes weeks later. It's incredible."</p>
+      <div class="testi-author">Sarah Mitchell</div>
+      <div class="testi-role">Team Lead, Atlas Real Estate Partners</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- CONTACT/CTA -->
+<section class="cta-section" id="contact">
+<div class="cta-inner">
+  <div class="reveal text-center">
+    <span class="section-tag">Get Started</span>
+    <h2 class="section-title">Start Your Free Trial Today</h2>
+    <p style="color:var(--slate);font-size:0.95rem;">Fill out the form and we'll reach out within a few hours.</p>
+  </div>
+  <div class="contact-form reveal">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="John Smith"/>
+      </div>
+      <div class="form-group">
+        <label>Phone / WhatsApp</label>
+        <input type="tel" placeholder="+1 (555) 000-0000"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Brokerage / Company Name</label>
+      <input type="text" placeholder="Your Brokerage"/>
+    </div>
+    <div class="form-group">
+      <label>Plan Interested In</label>
+      <select>
+        <option>Starter — 7-Day Free Trial ($59/mo)</option>
+        <option>Growth — Most Popular ($129/mo)</option>
+        <option>Scale — Enterprise (Custom)</option>
+        <option>Custom CRM Development</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Tell Us About Your Team</label>
+      <textarea placeholder="How many agents? What's your biggest challenge with leads right now?"></textarea>
+    </div>
+    <button class="form-submit" onclick="submitForm(this)">
+      <i class="fas fa-paper-plane"></i> Submit & Get Started
+    </button>
+  </div>
+  <div style="text-align:center;margin-top:16px;">
+    <a href="https://wa.me/918920419130?text=Hi%2C%20I%27m%20interested%20in%20NishHome%20AI%20CRM" target="_blank" class="wa-btn">
+      <i class="fab fa-whatsapp" style="font-size:1.4rem;"></i> Or Message Us on WhatsApp
+    </a>
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p><strong>LeadPilot</strong> AI CRM &nbsp;·&nbsp; Built by <a href="https://phishnix.site" style="color:var(--green);text-decoration:none;">Phishnix</a></p>
+  <p style="margin-top:6px;font-size:0.78rem;color:#7B7F85;">Custom AI-powered CRM solutions for real estate teams &nbsp;·&nbsp; <a href="https://wa.me/918920419130" style="color:var(--green);text-decoration:none;">WhatsApp Us</a></p>
+</div>
+
+<!-- NAV -->
+<div class="navigation">
+  <ul>
+    <li class="list active">
+      <a href="#home">
+        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+        <span class="text">Home</span>
+      </a>
+    </li>
+    <li class="list">
+      <a href="#features">
+        <span class="icon"><ion-icon name="flash-outline"></ion-icon></span>
+        <span class="text">Features</span>
+      </a>
+    </li>
+    <li class="list">
+      <a href="#plans">
+        <span class="icon"><ion-icon name="pricetag-outline"></ion-icon></span>
+        <span class="text">Plans</span>
+      </a>
+    </li>
+    <li class="list">
+      <a href="#analytics">
+        <span class="icon"><ion-icon name="bar-chart-outline"></ion-icon></span>
+        <span class="text">Analytics</span>
+      </a>
+    </li>
+    <li class="list">
+      <a href="#contact">
+        <span class="icon"><ion-icon name="call-outline"></ion-icon></span>
+        <span class="text">Contact</span>
+      </a>
+    </li>
+    <div class="indicator"></div>
+  </ul>
+</div>
+
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+// NAV
+const list = document.querySelectorAll('.list');
+function activelink(){list.forEach(i=>i.classList.remove('active'));this.classList.add('active');}
+list.forEach(i=>i.addEventListener('click',activelink));
+
+// SCROLL REVEAL
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});
+},{threshold:0.12});
+reveals.forEach(r=>observer.observe(r));
+
+// SCROLL TOP
+const scrollBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll',()=>{
+  scrollBtn.classList.toggle('show',window.scrollY>400);
+});
+
+// FORM SUBMIT
+function submitForm(btn){
+  btn.innerHTML='<i class="fas fa-check"></i> Request Sent!';
+  btn.style.background='var(--green)';btn.style.color='var(--dark)';
+  setTimeout(()=>{btn.innerHTML='<i class="fas fa-paper-plane"></i> Submit & Get Started';btn.style.background='';btn.style.color='';},3000);
+}
+
+// MOCK BAR ANIMATION on scroll
+const bars = document.querySelectorAll('.mock-bar-fill');
+const barObs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){bars.forEach(b=>{b.style.transition='width 1.2s cubic-bezier(.4,0,.2,1)';});}
+  });
+},{threshold:0.3});
+const mockup = document.querySelector('.analytics-mockup');
+if(mockup) barObs.observe(mockup);
+
+// Counter animation for stats
+function animateCounter(el,target,suffix=''){
+  let start=0;const dur=1400;const step=()=>{
+    const pct=Math.min((Date.now()-t0)/dur,1);
+    const val=Math.round(pct*target);
+    el.textContent=val+(suffix||'');
+    if(pct<1)requestAnimationFrame(step);
+  };
+  const t0=Date.now();requestAnimationFrame(step);
+}
+const statsObs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const nums = e.target.querySelectorAll('.stat-num');
+      nums.forEach(n=>{
+        const txt=n.textContent;
+        if(txt.includes('3x')){n.textContent='';animateCounter(n,3,'x');}
+        else if(txt.includes('%')){animateCounter(n,80,'%');}
+      });
+      statsObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.5});
+const heroStats=document.querySelector('.hero-stats');
+if(heroStats) statsObs.observe(heroStats);
+</script>
+</body>
+</html>
